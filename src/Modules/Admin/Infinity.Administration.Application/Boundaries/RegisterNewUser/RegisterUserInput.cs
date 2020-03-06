@@ -1,4 +1,4 @@
-﻿using Infinity.Administration.Infrastructure.Entities;
+﻿using Infinity.Administration.Infrastructure.SqlServerDataAccess.Entities;
 
 namespace Infinity.Administration.Application.Boundaries.RegisterNewUser
 {

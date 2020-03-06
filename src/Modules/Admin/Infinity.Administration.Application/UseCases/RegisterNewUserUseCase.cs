@@ -58,7 +58,9 @@
 
             input.User.Guid = Guid.NewGuid().ToString();
 
-            var lastInsertedId = await _userRepository.Create(input.User);
+            await _userRepository.Insert(input.User);
+
+            var lastInsertedId = 1;
 
             if (lastInsertedId <= 0)
             {

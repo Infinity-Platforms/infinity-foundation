@@ -18,6 +18,6 @@
         /// <summary>
         /// Gets or sets the Users
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        
     }
 }

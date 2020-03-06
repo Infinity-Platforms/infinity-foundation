@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Defines the <see cref="SqlServerDatabaseBaseRepository{TEntity}" />
@@ -33,22 +34,31 @@
             this.dbSet = context.Set<TEntity>();
         }
 
-        //public virtual IEnumerable<TEntity> GetWithRawSql(string query,
-        //    params object[] parameters)
-        //{
-        //    return dbSet.SqlQuery(query, parameters).ToList();
-        //}
+        /// <summary>
+        /// The Delete
+        /// </summary>
+        /// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/></param>
+        /// <returns>The <see cref="Task"/></returns>
+        public async Task Delete(TEntity entityToDelete)
+        {
+            await Task.Run(() =>
+            {
+                if (context.Entry(entityToDelete).State == EntityState.Detached)
+                {
+                    dbSet.Attach(entityToDelete);
+                }
+                dbSet.Remove(entityToDelete);
+            });
+        }
+
         /// <summary>
         /// The Get
         /// </summary>
         /// <param name="filter">The filter<see cref="Expression{Func{TEntity, bool}}"/></param>
         /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/></param>
         /// <param name="includeProperties">The includeProperties<see cref="string"/></param>
-        /// <returns>The <see cref="IEnumerable{TEntity}"/></returns>
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        /// <returns>The <see cref="Task{IEnumerable{TEntity}}"/></returns>
+        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -69,64 +79,46 @@
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return await orderBy(query).ToListAsync();
             }
             else
             {
-                return query.ToList();
+                return await query.ToListAsync();
             }
         }
 
         /// <summary>
-        /// The GetByID
+        /// The GetById
         /// </summary>
         /// <param name="id">The id<see cref="object"/></param>
-        /// <returns>The <see cref="TEntity"/></returns>
-        public virtual TEntity GetByID(object id)
+        /// <returns>The <see cref="Task{TEntity}"/></returns>
+        public async Task<TEntity> GetById(object id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
         /// <summary>
         /// The Insert
         /// </summary>
         /// <param name="entity">The entity<see cref="TEntity"/></param>
-        public virtual void Insert(TEntity entity)
+        /// <returns>The <see cref="Task"/></returns>
+        public async Task Insert(TEntity entity)
         {
-            dbSet.Add(entity);
-        }
-
-        /// <summary>
-        /// The Delete
-        /// </summary>
-        /// <param name="id">The id<see cref="object"/></param>
-        public virtual void Delete(object id)
-        {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
-        }
-
-        /// <summary>
-        /// The Delete
-        /// </summary>
-        /// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/></param>
-        public virtual void Delete(TEntity entityToDelete)
-        {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                dbSet.Attach(entityToDelete);
-            }
-            dbSet.Remove(entityToDelete);
+            await dbSet.AddAsync(entity);
         }
 
         /// <summary>
         /// The Update
         /// </summary>
         /// <param name="entityToUpdate">The entityToUpdate<see cref="TEntity"/></param>
-        public virtual void Update(TEntity entityToUpdate)
+        /// <returns>The <see cref="Task"/></returns>
+        public async Task Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            await Task.Run(() =>
+            {
+                dbSet.Attach(entityToUpdate);
+                context.Entry(entityToUpdate).State = EntityState.Modified;
+            });
         }
     }
 }

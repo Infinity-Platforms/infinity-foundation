@@ -15,8 +15,11 @@ namespace Infinity.Administration.Api.Controllers.V1.RegisterUser
 
         public RegisterUserInput ToUserInput()
         {
-            return new RegisterUserInput { 
-                User =new Infrastructure.Entities.User { 
+            return new RegisterUserInput {
+
+                
+                User =new Infrastructure.SqlServerDataAccess.Entities.User
+                { 
                     Firstname=Firstname,
                     Lastname=Lastname,
                     Email=Email

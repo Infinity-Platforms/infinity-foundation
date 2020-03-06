@@ -5,7 +5,7 @@ namespace Infinity.Administration.Domain.Users
     /// <summary>
     /// Defines the <see cref="User" />
     /// </summary>
-    public class User : BaseEntity, IUser
+    public abstract class User : BaseEntity, IUser
     {
         /// <summary>
         /// Gets or sets the Guid

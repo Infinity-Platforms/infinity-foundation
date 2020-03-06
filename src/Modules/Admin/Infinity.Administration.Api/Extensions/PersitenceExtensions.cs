@@ -1,7 +1,6 @@
 ﻿namespace Infinity.Administration.Api.Extensions
 {
     using Infinity.Administration.Domain.Users;
-    using Infinity.Administration.Infrastructure.EmbeddedDataAccess.Configuration;
     using Infinity.Administration.Infrastructure.SqlServerDataAccess.Configuration;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -27,16 +26,16 @@
 
             services.AddDbContext<SqlDataContext>(x => x.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:EmbeddedDb")));
 
-            if (useFake)
-            {
-                services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
-                services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
-            }
-            else
-            {
-                services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
-                services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
-            }
+            //if (useFake)
+            //{
+            //    services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
+            //    services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
+            //}
+            //else
+            //{
+            //    services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
+            //    services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
+            //}
 
             return services;
         }
