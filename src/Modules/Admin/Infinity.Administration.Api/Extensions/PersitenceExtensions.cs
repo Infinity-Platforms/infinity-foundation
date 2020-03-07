@@ -24,7 +24,8 @@
             bool useFake = configuration.GetValue<bool>("PersistenceModule:UseFake");
             string embeddedDbConnectionString = configuration.GetValue<string>("ConnectionStrings:EmbeddedDb");
 
-            services.AddDbContext<SqlDataContext>(x => x.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:EmbeddedDb")));
+            services.AddDbContext<SqlDataContext>(x => x.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:SqlDb")));
+            services.AddScoped<IUserRepository, Infrastructure.SqlServerDataAccess.Repositories.UserRepository>();
 
             //if (useFake)
             //{

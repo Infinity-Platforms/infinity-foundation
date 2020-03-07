@@ -1,0 +1,7 @@
+2020-03-07 10:57:19.0264 Info Message Template Auto Format enabled
+2020-03-07 10:57:19.0361 Info Loading assembly: NLog.Web.AspNetCore
+2020-03-07 10:57:19.1019 Info Adding target FileTarget(Name=allfile)
+2020-03-07 10:57:19.1019 Info Adding target FileTarget(Name=ownFile-web)
+2020-03-07 10:57:19.1434 Info Found 45 configuration items
+2020-03-07 10:58:03.0894 Info AppDomain Shutting down. Logger closing...
+2020-03-07 10:58:03.1183 Info Logger has been shut down.

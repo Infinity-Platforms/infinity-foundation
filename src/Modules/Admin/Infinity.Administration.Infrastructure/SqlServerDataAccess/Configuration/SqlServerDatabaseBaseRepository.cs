@@ -12,7 +12,7 @@
     /// Defines the <see cref="SqlServerDatabaseBaseRepository{TEntity}" />
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class SqlServerDatabaseBaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public abstract class SqlServerDatabaseBaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         /// <summary>
         /// Defines the context
@@ -92,7 +92,7 @@
         /// </summary>
         /// <param name="id">The id<see cref="object"/></param>
         /// <returns>The <see cref="Task{TEntity}"/></returns>
-        public async Task<TEntity> GetById(object id)
+        public async virtual Task<TEntity> GetById(int id)
         {
             return await dbSet.FindAsync(id);
         }

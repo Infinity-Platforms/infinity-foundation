@@ -13,11 +13,12 @@
     public interface IRepository<TEntity> where TEntity : IBaseEntity
     {
         /// <summary>
-        /// The Delete
+        /// The Insert
         /// </summary>
-        /// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/></param>
-        Task Delete(TEntity entityToDelete);
-         
+        /// <param name="entity">The entity<see cref="TEntity"/></param>
+        /// <returns>The <see cref="Task"/></returns>
+        Task Insert(TEntity entity);
+
         /// <summary>
         /// The Get
         /// </summary>
@@ -32,7 +33,7 @@
         /// </summary>
         /// <param name="id">The id<see cref="object"/></param>
         /// <returns>The <see cref="TEntity"/></returns>
-        Task<TEntity> GetById(object id);
+        Task<TEntity> GetById(int id);
 
         /// <summary>
         /// The GetWithRawSql
@@ -42,16 +43,19 @@
         /// <returns>The <see cref="IEnumerable{TEntity}"/></returns>
         //IEnumerable<TEntity> GetWithRawSql(string query, params object[] parameters);
 
-        /// <summary>
-        /// The Insert
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/></param>
-        Task Insert(TEntity entity);
 
         /// <summary>
         /// The Update
         /// </summary>
         /// <param name="entityToUpdate">The entityToUpdate<see cref="TEntity"/></param>
+        /// <returns>The <see cref="IEnumerable{TEntity}"/></returns>
         Task Update(TEntity entityToUpdate);
+
+        /// <summary>
+        /// The Delete
+        /// </summary>
+        /// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/></param>
+        /// <returns>The <see cref="Task"/></returns>
+        Task Delete(TEntity entityToDelete);
     }
 }

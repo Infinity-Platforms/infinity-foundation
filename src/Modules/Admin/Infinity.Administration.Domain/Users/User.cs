@@ -30,7 +30,7 @@ namespace Infinity.Administration.Domain.Users
         /// <summary>
         /// Gets or sets the Phones
         /// </summary>
-        public string[] Phones { get; set; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsActive

@@ -1,5 +1,6 @@
 ﻿namespace Infinity.Administration.Infrastructure.SqlServerDataAccess.Configuration
 {
+    using Infinity.Administration.Infrastructure.SqlServerDataAccess.Entities;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
@@ -18,6 +19,6 @@
         /// <summary>
         /// Gets or sets the Users
         /// </summary>
-        
+        public DbSet<User> Users { get; set; } = null;
     }
 }
