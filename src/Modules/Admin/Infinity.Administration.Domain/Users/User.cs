@@ -1,6 +1,7 @@
 namespace Infinity.Administration.Domain.Users
 {
     using Infinity.Administration.Domain.Base;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Defines the <see cref="User" />
@@ -15,6 +16,7 @@ namespace Infinity.Administration.Domain.Users
         /// <summary>
         /// Gets or sets the Firstname
         /// </summary>
+        [Required, MinLength(3), MaxLength(50)]
         public string Firstname { get; set; }
 
         /// <summary>
@@ -25,6 +27,7 @@ namespace Infinity.Administration.Domain.Users
         /// <summary>
         /// Gets or sets the Email
         /// </summary>
+        [ConcurrencyCheck]
         public string Email { get; set; }
 
         /// <summary>

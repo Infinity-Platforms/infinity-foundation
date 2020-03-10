@@ -2,6 +2,7 @@
 {
     using Infinity.Administration.Domain.Users;
     using Infinity.Administration.Infrastructure.SqlServerDataAccess.Configuration;
+    using Infinity.Shared.Domain.Persistence;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -22,22 +23,16 @@
             IConfiguration configuration)
         {
             bool useFake = configuration.GetValue<bool>("PersistenceModule:UseFake");
-            string embeddedDbConnectionString = configuration.GetValue<string>("ConnectionStrings:EmbeddedDb");
 
-            services.AddDbContext<SqlDataContext>(x => x.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:SqlDb")));
+            var persistenceSettings = new PersistenceSettings { 
+                SqlDbConnectionString = configuration.GetValue<string>("ConnectionStrings:SqlDb"),
+                NoSqlDbConnectionString = configuration.GetValue<string>("ConnectionStrings:EmbeddedDb")
+            };
+
+            services.AddSingleton<PersistenceSettings>(persistenceSettings);
+            services.AddDbContext<SqlDataContext>(x => x.UseSqlServer(persistenceSettings.SqlDbConnectionString));
             services.AddScoped<IUserRepository, Infrastructure.SqlServerDataAccess.Repositories.UserRepository>();
-
-            //if (useFake)
-            //{
-            //    services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
-            //    services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
-            //}
-            //else
-            //{
-            //    services.AddSingleton<EmbeddedDatabaseContext>(new EmbeddedDatabaseContext(embeddedDbConnectionString));
-            //    services.AddScoped<IUserRepository, Infrastructure.EmbeddedDataAccess.Repositories.UserRepository>();
-            //}
-
+             
             return services;
         }
     }
